@@ -30,7 +30,7 @@ shutil.rmtree("bomb")
 ##===================================
 ## Duplicating zips
 ##===================================
-print("Duplicating zips...")
+print("Duplicating zips, zip them, and repeat...")
 
 for i in range(6):
     print("Round", i+1)
@@ -38,9 +38,11 @@ for i in range(6):
     os.makedirs("bomb")
     shutil.move("bomb.zip", "bomb")
 
+    print("Duplicating...")
     for j in range(2, 101):
         shutil.copy("bomb/bomb.zip", f"bomb/bomb{j}.zip")
 
+    print("Zipping...")
     shutil.make_archive("bomb", "zip", "bomb")
     shutil.rmtree("bomb")
 
