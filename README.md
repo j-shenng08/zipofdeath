@@ -1,7 +1,11 @@
 # Introducing My Version of ZIP Bomb
 
 ## Introduction 
-A zip bomb is a small zip file (a few MB in my case, but it could be smaller) that can potentially become petabytes (1 million GB), exabytes (1 billion GB), zettabytes (1 trillion GB), or more when extracted. This is quite dangerous for your devices as it can exhaust your CPU, RAM, and filled up your drive, oftentimes crashing and freezing your computer. 
+A zip bomb is a small zip file (a few MB in my case, but it could be smaller) that can potentially become petabytes (1 million GB), exabytes (1 billion GB), zettabytes (1 trillion GB), or more when extracted. This is quite dangerous for your devices as it can exhaust your CPU, RAM, and fill up your drive, oftentimes crashing and freezing your computer. 
+
+The reason that a small zip file could expand to trillions of GBs is that zip removes redundancy effectively. Consider this: if I wrote ```0000000000000000000000000000000000000...```, the compression algorithm will notice it is just a repeated string of "0", and so it will probably represent it in this form: ```1000 zeros```. This is, of course, an oversimplification, but you get the idea. If you dig very deep into the zip bomb, you will notice that it is just the same character repeated many times. This is because the same, repeated character has way more redundancy than unique ones. A```0000000000000000...``` could be easily represented as ```100 zeros```, but ```Qx^4kL@ap|```? It could only be represented as itself, as no redundancy is found. 
+
+Since there's more redundancy, the compression ratio will be very high, at over 99%, leaving you with less than 1% of the original file size! Now imagine the same trick is used over and over again, getting over 99% compression ratio. After about 7 times, you will be left with 0.000000000001% of the total size!
 
 Nowadays, your computer will usually not let your computer explode when extracting a zip bomb, as the nested zip files have to be manually extracted, which can take a long time. However, you can actually bypass that through the use of recursive extraction, though this is highly not recommended.
 
