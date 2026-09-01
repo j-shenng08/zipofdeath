@@ -9,8 +9,7 @@ print("Writing file...")
 os.makedirs("bomb")
 
 with open("bomb/death1.txt", "w") as f:
-    for i in range(10000):
-        f.write("0"*2000)
+    f.write("0"*20000000)
 
 ##==================
 ##Duplicate
