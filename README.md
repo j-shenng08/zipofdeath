@@ -3,9 +3,13 @@
 ## Introduction 
 A zip bomb is a small zip file (a few MB in my case, but it could be smaller) that can potentially become petabytes (1 million GB), exabytes (1 billion GB), zettabytes (1 trillion GB), or more when extracted. This is quite dangerous for your devices as it can exhaust your CPU, RAM, and fill up your drive, oftentimes crashing and freezing your computer. 
 
-The reason that a small zip file could expand to trillions of GBs is that zip removes redundancy effectively. Consider this: if I wrote ```0000000000000000...```, the compression algorithm will notice it is just a repeated string of "0", and so it will probably represent it in this form: ```1000 zeros```. This is, of course, an oversimplification, but you get the idea. If you dig very deep into the zip bomb, you will notice that it is just the same character repeated many times. This is because the same, repeated character has way more redundancy than unique ones. A```0000000000000000...``` could be easily represented as ```1000 zeros```, but ```Qx^4kL@ap|```? It could only be represented as itself, as no redundancy is found. 
+The reason that a small zip file could expand to trillions of GBs is that zip removes redundancy effectively. Consider this: if I wrote ```0000000000000000...```, the compression algorithm will notice it is just a repeated string of "0", and so it will probably represent it in this form: ```1000 zeros```. This is, of course, an oversimplification, but you get the idea. If you dig very deep into the zip bomb, you will notice that it is just the same character repeated many times. This is because the same, repeated character has way more redundancy than unique ones. 
 
-Since there's more redundancy, the compression ratio will be very high, at over 99%, leaving you with less than 1% of the original file size! Now imagine the same trick is used over and over again, getting over 99% compression ratio. After about 7 times, you will be left with 0.000000000001% of the total size!
+For example:\
+```0000000000000000...``` --> 1000 ```0```\
+```Qx^4kL@ap\0pE Qx^4kL@ap\0pE :`Q*_-].,1a```  --> 2 ```Qx^4kL@ap\0pE``` 1 ```:`Q*_-].,1a``` This is so much less efficient that just repeated strings
+
+Since there's more redundancy, the compression ratio will be very high, at over 99%, leaving you with less than 1% of the original file size! Now imagine the zip is cloned many times and compressed again. The compression algorithm will also notice the redundancy (I mean this time it is the file that's repeating, not the characters) and removes them, therefore giving, yet again, a 99% compression ratio! Now imagine the same trick is used over and over again, getting over 99% compression ratio each time. After about 7 times, you will be left with 0.000000000001% of the total size!
 
 Nowadays, your computer will usually not let your computer explode when extracting a zip bomb, as the nested zip files have to be manually extracted, which can take a long time. However, you can actually bypass that through the use of recursive extraction, though this is highly not recommended.
 
